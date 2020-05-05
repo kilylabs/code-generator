@@ -36,7 +36,7 @@ trait ValueTrait
     /**
      * @return string|null
      */
-    protected function renderValue()
+    public function renderValue()
     {
         return $this->renderTyped($this->value);
     }
@@ -64,10 +64,19 @@ trait ValueTrait
                 break;
             case 'array':
                 $parts = [];
-                foreach ($value as $item) {
-                    $parts[] = $this->renderTyped($item);
+                $is_numeric = true;
+                foreach ($value as $key=>$item) {
+                    $parts[$key] = $this->renderTyped($item);
                 }
-                $value = '[' . implode(', ', $parts) . ']';
+                if(isset($key) && is_numeric($key)) {
+                    $value = '[' . implode(', ', $parts) . ']';
+                } else {
+                    $value = '['."\n";
+                    foreach($parts as $k=>$v) {
+                        $value .= "\t\t\t'".$k."' => ".$v.",\n";
+                    }
+                    $value .= "\t\t".']';
+                }
 
                 break;
             default:
