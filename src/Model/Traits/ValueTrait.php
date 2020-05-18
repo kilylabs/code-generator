@@ -73,9 +73,9 @@ trait ValueTrait
                 } else {
                     $value = '['."\n";
                     foreach($parts as $k=>$v) {
-                        $value .= "\t\t\t'".$k."' => ".$v.",\n";
+                        $value .= "\t\t'".$k."' => ".$v.",\n";
                     }
-                    $value .= "\t\t".']';
+                    $value .= "\t".']';
                 }
 
                 break;
